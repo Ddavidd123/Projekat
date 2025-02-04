@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "simulacija.h"
 
-//struktura za uslove puta
-typedef struct {
-    char *name;
-    double friction_coefficient;
-}Surface;
+
 
 //Funkcija za izracunavanje kocenja bez ABS-a
 void simulate_no_abs(double initial_speed, double braking_force,Surface surface,double vehicle_mass)
@@ -25,7 +22,7 @@ void simulate_no_abs(double initial_speed, double braking_force,Surface surface,
 
     printf("[INFO] Pocetak simulacije kocenja bez ABS-a..\n");
     printf("Brzina: %.2f km/h\n",initial_speed);
-    printf("Kociona sila: %.2f N",braking_force);
+    printf("Kociona sila: %.2f N\n",braking_force);
     printf("Podloga: %s\n",surface.name);
     printf("Koeficijent trenja: %.2f\n",friction);
 
@@ -156,6 +153,8 @@ int main()
 
         }
     }while(active);
+
+
 
     return 0;
 }
