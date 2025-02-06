@@ -2,8 +2,28 @@
 #include <stdlib.h>
 #include "simulacija.h"
 
+//funkcija za upis rezultata u fajl
+void log_results(const char* filename, double initial_speed, double braking_force, Surface surface,double stopping_distance,double stopping_time,int abs_active)
+{
+    FILE *file = fopen(filename,"a"); //otvaranje fajla
+    if(file == NULL)
+    {
+        printf("Greska pri otvaranju fajla!\n");
+        return;
+    }
+    fprintf(file,"----------------------------\n");
+    fprintf(file,"Simulacija kocenja %s ", abs_active ? " sa ABS-om\n" : "bez ABS-a\n");
+    fprintf(file,"Brzina vozila: %.2f km/h\n",initial_speed);
+    fprintf(file,"Kociona sila: %.2f N\n",braking_force);
+    fprintf(file,"Podloga: %s\n",surface.name);
+    fprintf(file,"Koeficijent trenja: %.2f\n",surface.friction_coefficient);
+    fprintf(file,"Put zaustavljanja: %.2f m\n",stopping_distance);
+    fprintf(file,"Vreme zaustavljanja: %.2f s\n",stopping_time);
+    fprintf(file,"----------------------------\n");
 
+    fclose(file);
 
+}
 //Funkcija za izracunavanje kocenja bez ABS-a
 void simulate_no_abs(double initial_speed, double braking_force,Surface surface,double vehicle_mass)
 {
@@ -35,6 +55,9 @@ void simulate_no_abs(double initial_speed, double braking_force,Surface surface,
 
     printf("Ukupno predjeni put do zaustavljanja: %.2f m\n",stopping_distance);
     printf("Vreme zaustavljanja: %.2f s\n",stopping_time);
+
+    //pozivanje funkcije za upis u fajl
+    log_results("simulacija_log.txt",initial_speed,braking_force,surface,stopping_distance,stopping_time,0);
 }
 
 //funkcija za izracunavanje kocenja sa ABS-om
@@ -71,6 +94,7 @@ void simulate_with_abs(double initial_speed,double braking_force, Surface surfac
     printf("[INFO] Vozilo se zaustavilo bez blokiranja tockova.\n");
     printf("Ukupno predjeni put do zaustavljanja: %.2f m \n", stopping_distance);
     printf("Vreme zaustavljanja: %.2f s\n",stopping_time);
+    log_results("simulacija_log.txt",initial_speed,braking_force,surface,stopping_distance,stopping_time,0);
 }
 
 int main()
@@ -86,17 +110,18 @@ int main()
         {"Sneg/led",0.2}
     };
 
-    printf("######################################\n");
-    printf("Unesite pocetnu brzinu vozila (km/h): ");
-    scanf("%d", &pocetnaBrzina);
-    printf("Unesite kocionu silu (N): ");
-    scanf("%d",&kocionaSila);
-    printf("Unesite masu vozila: ");
-    scanf("%d",&vehicleMass);
-
 
     int izbor;
     do{
+        printf("######################################\n");
+        printf("Unesite pocetnu brzinu vozila (km/h): ");
+        scanf("%d", &pocetnaBrzina);
+        printf("Unesite kocionu silu (N): ");
+        scanf("%d",&kocionaSila);
+        printf("Unesite masu vozila: ");
+        scanf("%d",&vehicleMass);
+
+
         //Ispis Menia
         printf("\nIzaberite tip podloge: \n");
 
