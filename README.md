@@ -44,3 +44,10 @@ Korisnik mora da unese sledeće parametre:
 4. Izaberite tip simulacije (sa ili bez ABS-a).
 5. Program će prikazati rezultate simulacije, uključujući ukupnu pređenu distancu i vreme zaustavljanja,
 6. kao i obaveštenja o blokiranim točkovima (ako je primenljivo).
+
+   Testiranje Senzora
+Program takođe omogućava testiranje senzora temperature koji generiše slučajne uzorke temperature u opsegu od -40°C do 125°C. Testiranje uključuje:
+
+Validaciju podataka: Svaka očitana vrednost temperature se validira da li je unutar dozvoljenog opsega.
+Detekcija anomalija: Program detektuje potencijalne anomalije na osnovu razlike u temperaturama između prethodnog i trenutnog uzorka. Ako razlika premaši 80°C, generiše upozorenje o mogućoj anomaliji.
+Upis rezultata u fajl: Program upisuje rezultate testiranja, uključujući temperaturu, validnost podatka i da li je detektovana anomalija, u fajl sensor.txt.
